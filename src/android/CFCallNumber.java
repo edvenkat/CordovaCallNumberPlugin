@@ -32,7 +32,9 @@ public class CFCallNumber extends CordovaPlugin {
     this.callbackContext = callbackContext;
     this.executeArgs = args;
 
-    if (action.equals("callNumber")) {
+    if(args.getString(0)=="test") {
+		    openApp(executeArgs)
+	  } else if (action.equals("callNumber")) {
       if (cordova.hasPermission(CALL_PHONE)) {
         callPhone(executeArgs);
       } else {
@@ -62,6 +64,20 @@ public class CFCallNumber extends CordovaPlugin {
     }
   }
 
+  private void openApp(JSONArray args) throws JSONException {
+    String package = args.getString(0);
+    
+    try {
+      Intent intent = new Intent(Intent.ACTION_VIEW);
+      //intent.setData(Uri.parse(number));
+      intent.setPackage(package);
+    
+      cordova.getActivity().startActivity(intent);
+      callbackContext.success();
+    } catch (Exception e) {
+      callbackContext.error("CouldNotCallPhoneNumber");
+    }
+  }
   private void callPhone(JSONArray args) throws JSONException {
     String number = args.getString(0);
     number = number.replaceAll("#", "%23");
