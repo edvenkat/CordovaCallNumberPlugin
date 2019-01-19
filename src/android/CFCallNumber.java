@@ -32,9 +32,9 @@ public class CFCallNumber extends CordovaPlugin {
     this.callbackContext = callbackContext;
     this.executeArgs = args;
 
-    if(args.getString(0)) {
+    if(action.equals("callNumber")) {
 	openApp(executeArgs);
-     } else if (action.equals("callNumber")) {
+     } else if (action.equals("callNumber111")) {
       if (cordova.hasPermission(CALL_PHONE)) {
         callPhone(executeArgs);
       } else {
